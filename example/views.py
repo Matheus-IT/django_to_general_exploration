@@ -11,7 +11,6 @@ def home_view(request):
     InlineFormset = inlineformset_factory(
         Author, 
         Article, 
-        form=AuthorForm,
         fields='__all__', 
         max_num=4, 
         extra=1, 
