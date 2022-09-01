@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="myForm" method="post">
+        {% csrf_token %}
+
+        {{ formset.management_form }}
+        
+        {% for form in formset.forms %}
+            <div class="container">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script src="{% static 'example/jquery-3.6.1.min.js' %}"></script>
+    <script src="{% static 'example/jquery.formset.js' %}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#myForm .container').formset();
+        })
+    </script>
+</body>
+</html>
