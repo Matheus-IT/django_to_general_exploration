@@ -12,11 +12,13 @@
     <form id="myForm" method="post">
         {% csrf_token %}
 
+        {{ model_form.as_div }}
+
         {{ formset.management_form }}
         
         {% for form in formset.forms %}
-            <div class="container">
-                {{ form.as_p }}
+            <div class="formset__form-container">
+                {{ form.as_div }}
             </div>
         {% endfor %}
 
@@ -27,7 +29,7 @@
     <script src="{% static 'example/jquery.formset.js' %}"></script>
     <script type="text/javascript">
         $(function() {
-            $('#myForm .container').formset();
+            $('#myForm .formset__form-container').formset();
         })
     </script>
 </body>
