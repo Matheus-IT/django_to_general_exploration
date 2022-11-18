@@ -1,27 +1,27 @@
 from django.shortcuts import render
-from django.forms import modelformset_factory, inlineformset_factory
-from example.forms import AuthorForm
-
-from example.models import Author, Article
+from django.http import StreamingHttpResponse, FileResponse
+from itertools import count
 
 
 def home_view(request):
-    model_form = AuthorForm(request.POST or None)
+    return render(request, 'example/home.html')
 
-    InlineFormset = inlineformset_factory(
-        Author, 
-        Article, 
-        fields='__all__', 
-        max_num=4, 
-        extra=1, 
-        can_delete=True
-    )
+def download_view(request):
+    # def file_iterator(file_path, chunk_size=512):
+    #     print(file_path)
+    #     with open(file_path) as f:
+    #         while True:
+    #             c = f.read(chunk_size)
+    #             if c:
+    #                 yield bytes(c)
+    #             else:
+    #                 break
 
-    author = Author.objects.filter(name='author1').first()
-    formset = InlineFormset(request.POST or None, instance=author)
-
-    if formset.is_valid():
-        formset.save()
-
-    return render(request, 'example/home.html', {'formset': formset,
-                                                 'model_form': model_form})
+    filename = 'JS41917_598474_US_RAIMUNDA NONATA DA SILVA FRANCA_DICOM'
+    file_path = f'example/assets/{filename}.zip'
+    
+    # response = StreamingHttpResponse(file_iterator(file_path), content_type='application/octet-stream')
+    with open(file_path) as f:
+        response = FileResponse(f)
+        response['Content-Disposition'] = f'attachment; filename={filename}.zip'
+        return response

@@ -9,28 +9,12 @@
     <title>Document</title>
 </head>
 <body>
-    <form id="myForm" method="post">
-        {% csrf_token %}
+<button onclick="perform_download(`{% url 'download_view' %}`)">Download</button>        
 
-        {{ model_form.as_div }}
-
-        {{ formset.management_form }}
-        
-        {% for form in formset.forms %}
-            <div class="formset__form-container">
-                {{ form.as_div }}
-            </div>
-        {% endfor %}
-
-        <input type="submit" value="Submit">
-    </form>
-
-    <script src="{% static 'example/jquery-3.6.1.min.js' %}"></script>
-    <script src="{% static 'example/jquery.formset.js' %}"></script>
-    <script type="text/javascript">
-        $(function() {
-            $('#myForm .formset__form-container').formset();
-        })
-    </script>
+<script>
+    function perform_download(url) {
+        const opened = window.open(url, '_blank');
+    }
+</script>
 </body>
 </html>
