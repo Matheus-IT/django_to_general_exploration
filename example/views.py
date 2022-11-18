@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 from django.http import StreamingHttpResponse, FileResponse
 from itertools import count
@@ -11,7 +12,6 @@ def home_view(request):
     return render(request, 'example/home.html')
 
 def download_view(request):
-    pass
     # def file_iterator(file_path, chunk_size=512):
     #     print(file_path)
     #     with open(file_path) as f:
@@ -25,8 +25,8 @@ def download_view(request):
 
     # response = StreamingHttpResponse(file_iterator(file_path), content_type='application/octet-stream')
     
-    # This alternative worked, but the download was incomplete:
-    # file_url = static('images/example.jpg')
-    # response = FileResponse(file_url)
-    # response['Content-Disposition'] = f'attachment; filename=example.zip'
-    # return response
+    # This approach was successful, but the response was not chunked
+    file = requests.get('https://sample-videos.com/img/Sample-jpg-image-1mb.jpg')
+    response = FileResponse(file)
+    response['Content-Disposition'] = f'attachment; filename=example.jpg'
+    return response
