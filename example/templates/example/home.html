@@ -12,8 +12,14 @@
 <button onclick="perform_download(`{% url 'download_view' %}`)">Download</button>        
 
 <script>
-    function perform_download(url) {
-        const opened = window.open(url, '_blank');
+    async function perform_download(url) {
+        window.open(url);
+        window.open(url);
+        window.open(url);
+    }
+ 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 </script>
 </body>

@@ -12,21 +12,30 @@ def home_view(request):
     return render(request, 'example/home.html')
 
 def download_view(request):
-    # def file_iterator(file_path, chunk_size=512):
-    #     print(file_path)
-    #     with open(file_path) as f:
-    #         while True:
-    #             c = f.read(chunk_size)
-    #             if c:
-    #                 yield bytes(c)
-    #             else:
-    #                 break
+    def file_iterator(file_response, chunk_size=512):
+        for c in file_response.iter_content(chunk_size):
+            if c:
+                yield c
+            else:
+                break
 
-
-    # response = StreamingHttpResponse(file_iterator(file_path), content_type='application/octet-stream')
-    
-    # This approach was successful, but the response was not chunked
-    file = requests.get('https://sample-videos.com/img/Sample-jpg-image-1mb.jpg')
-    response = FileResponse(file)
-    response['Content-Disposition'] = f'attachment; filename=example.jpg'
+    # This solution returns
+    URL = 'https://sample-videos.com/img/Sample-jpg-image-1mb.jpg'
+    file_response = requests.get(URL, stream=True)
+    response = StreamingHttpResponse(file_iterator(file_response))
+    response['Content-Disposition'] = f'attachment; filename=example.jpeg'
     return response
+
+    # # In this approach the request to the file is chunked
+    # URL = 'https://sample-videos.com/img/Sample-jpg-image-1mb.jpg'
+    # file = requests.get(URL, stream=True)
+    # response = FileResponse(file)
+    # response['Content-Disposition'] = f'attachment; filename=example.jpeg'
+    # return response
+
+    # # In this approach the response was not chunked, and the file is not opening
+    # URL = 'https://sample-videos.com/img/Sample-jpg-image-1mb.jpg'
+    # file = requests.get(URL)
+    # response = FileResponse(file)
+    # response['Content-Disposition'] = f'attachment; filename=example.zip'
+    # return response
