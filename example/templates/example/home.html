@@ -9,28 +9,8 @@
     <title>Document</title>
 </head>
 <body>
-    <form id="myForm" method="post">
-        {% csrf_token %}
-
-        {{ model_form.as_div }}
-
-        {{ formset.management_form }}
-        
-        {% for form in formset.forms %}
-            <div class="formset__form-container">
-                {{ form.as_div }}
-            </div>
-        {% endfor %}
-
-        <input type="submit" value="Submit">
-    </form>
+    <h1>hello</h1>
 
     <script src="{% static 'example/jquery-3.6.1.min.js' %}"></script>
-    <script src="{% static 'example/jquery.formset.js' %}"></script>
-    <script type="text/javascript">
-        $(function() {
-            $('#myForm .formset__form-container').formset();
-        })
-    </script>
 </body>
 </html>
