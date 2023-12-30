@@ -1,2 +1,2 @@
-# formset_example
-Exploring formsets, model formsets, inline formsets
+# General exploration
+This repository is intended to serve as example to implement and test basic ideas
