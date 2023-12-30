@@ -9,10 +9,18 @@ class Author(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    class Meta:
+        verbose_name_plural = 'Categories'
+
+    name = models.CharField(max_length=100)
+
+
 class Article(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField()
+    categories = models.ManyToManyField(Category)
 
     def __str__(self):
         return self.title
