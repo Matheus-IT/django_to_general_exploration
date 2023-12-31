@@ -22,6 +22,6 @@ def home_view(request):
     )
     print('\nfilter by age >>>', result)
     print('\nsql query >>>', result.query)
-    print()
+
     return render(request, 'example/home.html', {})
     
