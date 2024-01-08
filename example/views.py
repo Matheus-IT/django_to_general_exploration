@@ -12,16 +12,19 @@ from example.utils import *
 
 @how_many_queries
 def home_view(request):
+    # -------------------------------------------------------------------------
     # Filtering by age using annotate
     # result = Author.objects.annotate(
     #     age=ExtractYear(Now()) - ExtractYear('birth_date')
     # ).filter(age__gt=20)
 
+    # -------------------------------------------------------------------------
     # Using Q with and "&", and not "~"
     # result = Author.objects.filter(
     #     Q(name__startswith='Larry') & ~Q(name__startswith='Robert')
     # )
 
+    # -------------------------------------------------------------------------
     # Making block of code atomic within a transaction
     with atomic():
         result = Author.objects.first()
